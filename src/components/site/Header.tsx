@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react";
 
 const navItems = [
-  { to: "/services" as const, label: "SERVICES", badge: "4", hash: undefined },
+  { to: "/" as const, label: "SERVICES", badge: "4", hash: "services" },
   { to: "/studio" as const, label: "STUDIO", badge: "", hash: undefined },
   { to: "/" as const, label: "FAQ", badge: "8", hash: "faq" },
 ];

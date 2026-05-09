@@ -233,7 +233,7 @@ const cards: CardData[] = [
 
 export function PortfolioShowcase() {
   return (
-    <section className="relative w-full overflow-hidden pt-24 pb-0 md:pt-32 md:pb-0">
+    <section className="relative w-full overflow-hidden py-24 md:py-32">
       {/* Blueprint grid overlay */}
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.035]"

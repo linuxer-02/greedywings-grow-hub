@@ -73,15 +73,15 @@ export function FaqShowcase() {
   const [activeId, setActiveId] = useState<string | null>("01");
 
   return (
-    <section id="faq" className="relative w-full px-4 pt-12 pb-24 md:px-8 md:pt-16 md:pb-32 xl:px-10">
+    <section id="faq" className="relative w-full px-4 py-24 md:px-8 md:py-32 xl:px-10">
       {/* Decorative background elements */}
       <div className="pointer-events-none absolute left-0 top-1/4 h-96 w-96 -translate-x-1/2 rounded-full bg-primary/10 blur-[120px]" />
 
-      {/* "Sandbox" Container */}
-      <div className="relative z-10 mx-auto flex max-w-[1500px] flex-col gap-16 rounded-[2.5rem] bg-[#F7F5F2] p-8 dark:bg-[#151515] dark:border dark:border-border/50 lg:flex-row lg:items-start lg:gap-12 lg:p-16">
+      {/* Structured Container */}
+      <div className="relative z-10 mx-auto flex max-w-[1500px] flex-col gap-0 overflow-hidden rounded-[2.5rem] border-2 border-foreground/20 lg:flex-row lg:items-start">
 
         {/* ── Left Column ── */}
-        <div className="flex w-full shrink-0 flex-col lg:sticky lg:top-32 lg:w-[35%] xl:w-[30%]">
+        <div className="relative z-10 flex w-full shrink-0 flex-col p-8 lg:sticky lg:top-32 lg:w-[35%] lg:border-r-2 lg:border-foreground/20 lg:p-12 xl:w-[30%]">
           <span className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-primary">
             FREQUENTLY ASKED
             <br />
@@ -107,8 +107,11 @@ export function FaqShowcase() {
         </div>
 
         {/* ── Right Column (Grid) ── */}
-        <div className="flex-1 min-w-0 w-full border border-border/40 bg-border/40">
-          <div className="grid grid-cols-3 gap-[1px]">
+        <div className="flex-1 min-w-0 w-full">
+          <div
+            className="grid grid-cols-3 overflow-hidden"
+            style={{ height: "640px", gridAutoRows: "1fr" }}
+          >
             {faqs.map((faq) => {
               const isActive = activeId === faq.id;
               // Dynamic column spans for the sliding puzzle effect
@@ -124,9 +127,9 @@ export function FaqShowcase() {
                   transition={{ duration: 0.5, type: "spring", bounce: 0.2 }}
                   key={faq.id}
                   onClick={() => setActiveId(isActive ? null : faq.id)}
-                  className={`group relative flex w-full flex-col overflow-hidden text-left transition-colors duration-300 ${colSpanClass} ${isActive
-                      ? "bg-primary/5"
-                      : "bg-background hover:bg-card/40"
+                  className={`group relative flex w-full flex-col overflow-hidden text-left outline outline-[1.5px] outline-foreground/20 transition-colors duration-300 ${colSpanClass} ${isActive
+                    ? "bg-primary/[0.06] z-10"
+                    : "bg-foreground/[0.02] dark:bg-white/[0.04] hover:bg-foreground/[0.04] dark:hover:bg-white/[0.06]"
                     }`}
                 >
                   {/* Active Border Overlay */}
@@ -136,12 +139,12 @@ export function FaqShowcase() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="pointer-events-none absolute inset-0 z-10 border border-primary/30"
+                        className="pointer-events-none absolute inset-0 z-10 border-2 border-primary"
                       />
                     )}
                   </AnimatePresence>
 
-                  <motion.div layout className="flex h-full w-full flex-col p-2.5 sm:p-4 md:p-5">
+                  <motion.div layout className="flex h-full w-full flex-col p-4 sm:p-5 md:p-6">
                     {isActive ? (
                       /* Horizontal Layout for Active Item */
                       <motion.div

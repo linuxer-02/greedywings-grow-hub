@@ -56,7 +56,7 @@ export function ServicesShowcase() {
   const [activeService, setActiveService] = useState(services[0]);
 
   return (
-    <section className="mx-auto flex w-full max-w-[1500px] flex-col items-start justify-start px-5 py-24 md:px-10 md:py-32">
+    <section id="services" className="mx-auto flex w-full max-w-[1500px] flex-col items-start justify-start px-5 py-24 md:px-10 md:py-32">
 
       {/* Header Section */}
       <div className="flex w-full flex-col gap-8 md:flex-row md:items-end md:justify-between lg:gap-16">
