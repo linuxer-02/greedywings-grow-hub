@@ -1,9 +1,3 @@
 {
-  "version": 2,
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/dist/server/server.js"
-    }
-  ]
+  "buildCommand": "vite build"
 }
