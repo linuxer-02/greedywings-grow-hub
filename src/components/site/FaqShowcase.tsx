@@ -73,13 +73,13 @@ export function FaqShowcase() {
   const [activeId, setActiveId] = useState<string | null>("01");
 
   return (
-    <section id="faq" className="relative w-full px-4 py-24 md:px-8 md:py-32 xl:px-10">
+    <section id="faq" className="relative w-full px-4 pt-12 pb-24 md:px-8 md:pt-16 md:pb-32 xl:px-10">
       {/* Decorative background elements */}
       <div className="pointer-events-none absolute left-0 top-1/4 h-96 w-96 -translate-x-1/2 rounded-full bg-primary/10 blur-[120px]" />
-      
+
       {/* "Sandbox" Container */}
       <div className="relative z-10 mx-auto flex max-w-[1500px] flex-col gap-16 rounded-[2.5rem] bg-[#F7F5F2] p-8 dark:bg-[#151515] dark:border dark:border-border/50 lg:flex-row lg:items-start lg:gap-12 lg:p-16">
-        
+
         {/* ── Left Column ── */}
         <div className="flex w-full shrink-0 flex-col lg:sticky lg:top-32 lg:w-[35%] xl:w-[30%]">
           <span className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-primary">
@@ -94,7 +94,7 @@ export function FaqShowcase() {
             <span className="text-primary">matters.</span>
           </h2>
           <div className="mt-8 h-[1px] w-12 bg-foreground/60" />
-          
+
           <div className="mt-12">
             <Link
               to="/contact"
@@ -112,10 +112,10 @@ export function FaqShowcase() {
             {faqs.map((faq) => {
               const isActive = activeId === faq.id;
               // Dynamic column spans for the sliding puzzle effect
-              const colSpanClass = isActive 
-                ? "col-span-3" 
-                : faq.colSpan === 2 
-                  ? "col-span-2" 
+              const colSpanClass = isActive
+                ? "col-span-3"
+                : faq.colSpan === 2
+                  ? "col-span-2"
                   : "col-span-1";
 
               return (
@@ -124,20 +124,19 @@ export function FaqShowcase() {
                   transition={{ duration: 0.5, type: "spring", bounce: 0.2 }}
                   key={faq.id}
                   onClick={() => setActiveId(isActive ? null : faq.id)}
-                  className={`group relative flex w-full flex-col overflow-hidden text-left transition-colors duration-300 ${colSpanClass} ${
-                    isActive 
-                      ? "bg-primary/5" 
+                  className={`group relative flex w-full flex-col overflow-hidden text-left transition-colors duration-300 ${colSpanClass} ${isActive
+                      ? "bg-primary/5"
                       : "bg-background hover:bg-card/40"
-                  }`}
+                    }`}
                 >
                   {/* Active Border Overlay */}
                   <AnimatePresence>
                     {isActive && (
-                      <motion.div 
+                      <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="pointer-events-none absolute inset-0 z-10 border border-primary/30" 
+                        className="pointer-events-none absolute inset-0 z-10 border border-primary/30"
                       />
                     )}
                   </AnimatePresence>
@@ -145,7 +144,7 @@ export function FaqShowcase() {
                   <motion.div layout className="flex h-full w-full flex-col p-2.5 sm:p-4 md:p-5">
                     {isActive ? (
                       /* Horizontal Layout for Active Item */
-                      <motion.div 
+                      <motion.div
                         key="active"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
@@ -156,12 +155,12 @@ export function FaqShowcase() {
                         <span className="mt-0.5 font-sans text-base font-bold text-primary sm:text-xl">
                           {faq.id}
                         </span>
-                        
+
                         <div className="flex flex-1 flex-col">
                           <h3 className="font-sans text-sm font-bold tracking-tight text-foreground sm:text-lg">
                             {faq.question}
                           </h3>
-                          <motion.div 
+                          <motion.div
                             initial={{ height: 0, opacity: 0 }}
                             animate={{ height: "auto", opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}
