@@ -3,9 +3,9 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react";
 
 const navItems = [
-  { to: "/services" as const, label: "SERVICES", badge: "4" },
-  { to: "/studio" as const, label: "STUDIO", badge: "" },
-  { to: "/faq" as const, label: "FAQ", badge: "8" },
+  { to: "/services" as const, label: "SERVICES", badge: "4", hash: undefined },
+  { to: "/studio" as const, label: "STUDIO", badge: "", hash: undefined },
+  { to: "/" as const, label: "FAQ", badge: "8", hash: "faq" },
 ];
 
 export function Header() {
@@ -25,8 +25,9 @@ export function Header() {
         <nav className="hidden items-center gap-10 md:flex">
           {navItems.map((item) => (
             <Link
-              key={item.to}
+              key={item.label}
               to={item.to}
+              hash={item.hash}
               className="group relative font-mono text-xs font-medium uppercase tracking-[0.18em] text-foreground/80 transition-colors hover:text-primary"
               activeProps={{ className: "text-primary" }}
             >
@@ -62,8 +63,9 @@ export function Header() {
           <nav className="flex flex-col gap-4">
             {navItems.map((item) => (
               <Link
-                key={item.to}
+                key={item.label}
                 to={item.to}
+                hash={item.hash}
                 onClick={() => setOpen(false)}
                 className="font-mono text-sm uppercase tracking-[0.18em] text-foreground"
               >
