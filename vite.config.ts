@@ -11,15 +11,10 @@ export default defineConfig({
         entry: "src/server.ts",
       },
     }),
-
     react(),
     tailwindcss(),
-
-    tsConfigPaths({
-      projects: ["./tsconfig.json"],
-    }),
+    tsConfigPaths({ projects: ["./tsconfig.json"] }),
   ],
-
   resolve: {
     alias: {
       "@": "/src",
