@@ -82,8 +82,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:site", content: "@GreedyWings" },
       { name: "twitter:title", content: "GreedyWings — Digital Marketing Agency" },
       { name: "twitter:description", content: "A digital marketing agency built for brands with appetite. We turn attention into revenue." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/7dd43730-bcdf-4001-853d-394d478dbc5f/id-preview-4d56e8be--ff064b45-79d2-4897-8015-bb51d839809d.lovable.app-1778327790241.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/7dd43730-bcdf-4001-853d-394d478dbc5f/id-preview-4d56e8be--ff064b45-79d2-4897-8015-bb51d839809d.lovable.app-1778327790241.png" },
     ],
     links: [
       {
