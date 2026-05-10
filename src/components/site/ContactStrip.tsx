@@ -4,7 +4,6 @@ import { ArrowUpRight } from "lucide-react";
 export function ContactStrip() {
   return (
     <section className="relative w-full overflow-hidden bg-foreground text-background">
-
       {/* Blueprint grid — inverted */}
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.04]"
@@ -27,7 +26,6 @@ export function ContactStrip() {
 
       <div className="relative z-10 mx-auto max-w-[1500px] px-5 py-14 md:px-10 md:py-16">
         <div className="flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between">
-
           {/* ── Left: Headline ── */}
           <div className="flex flex-col">
             <span className="font-mono text-[9px] font-bold uppercase tracking-[0.3em] text-background/50">
@@ -37,7 +35,8 @@ export function ContactStrip() {
               className="mt-4 font-display font-black leading-[0.88] tracking-[-0.04em] text-background"
               style={{ fontSize: "clamp(3rem, 7vw, 6.5rem)" }}
             >
-              Let's build<br />
+              Let's build
+              <br />
               <span className="text-primary">together.</span>
             </h2>
           </div>
@@ -45,7 +44,11 @@ export function ContactStrip() {
           {/* ── Middle: Contact Details ── */}
           <div className="flex flex-col gap-6 lg:items-end">
             {[
-              { label: "Email us", value: "hello@greedywings.in", href: "mailto:hello@greedywings.in" },
+              {
+                label: "Email us",
+                value: "hello@greedywings.in",
+                href: "mailto:hello@greedywings.in",
+              },
               { label: "Call us", value: "+91 98765 43210", href: "tel:+919876543210" },
             ].map(({ label, value, href }) => (
               <a key={label} href={href} className="group flex flex-col items-start lg:items-end">

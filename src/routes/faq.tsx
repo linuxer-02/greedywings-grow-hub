@@ -17,7 +17,9 @@ function FaqPage() {
     <div className="min-h-screen bg-background text-foreground">
       <Header />
       <main className="mx-auto flex min-h-screen max-w-[1500px] flex-col items-start justify-center px-5 pt-32 md:px-10">
-        <span className="font-mono text-xs uppercase tracking-[0.25em] text-muted-foreground">// soon°</span>
+        <span className="font-mono text-xs uppercase tracking-[0.25em] text-muted-foreground">
+          // soon°
+        </span>
         <h1 className="mt-4 font-display text-5xl font-black tracking-tight md:text-7xl">
           <span className="text-primary">Faq</span> — coming soon
         </h1>

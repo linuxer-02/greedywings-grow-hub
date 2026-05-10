@@ -9,13 +9,29 @@ function BrowserIllustration() {
       {/* Decorative shapes specific to Websites */}
       <div className="absolute -right-8 -top-12 h-32 w-32 rounded-full bg-[#E8CDA5] opacity-50 blur-[2px]" />
       <div className="absolute -right-2 top-10 h-8 w-8 rounded-full bg-primary" />
-      <div className="absolute -bottom-8 right-12 h-16 w-16" style={{ clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)", backgroundColor: "#C2C2C2", opacity: 0.5 }} />
+      <div
+        className="absolute -bottom-8 right-12 h-16 w-16"
+        style={{
+          clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)",
+          backgroundColor: "#C2C2C2",
+          opacity: 0.5,
+        }}
+      />
 
       <svg viewBox="0 0 280 175" className="relative z-10 h-full w-full" fill="none">
         {/* shadow behind browser */}
         <rect x="12" y="12" width="262" height="163" rx="3" fill="#2B2B2B" opacity="0.25" />
         {/* browser frame */}
-        <rect x="4" y="4" width="262" height="163" rx="3" fill="#e8dfd0" stroke="#2B2B2B" strokeWidth="1.5" />
+        <rect
+          x="4"
+          y="4"
+          width="262"
+          height="163"
+          rx="3"
+          fill="#e8dfd0"
+          stroke="#2B2B2B"
+          strokeWidth="1.5"
+        />
         {/* toolbar */}
         <rect x="4" y="4" width="262" height="26" rx="3" fill="#d5ccbc" />
         <rect x="4" y="20" width="262" height="10" fill="#d5ccbc" />
@@ -41,7 +57,10 @@ function VideoIllustration() {
       {/* Decorative shapes specific to Videos */}
       <div className="absolute -left-16 bottom-0 h-10 w-10 rounded-full bg-foreground" />
       <div className="absolute -left-16 bottom-16 h-4 w-4 rounded-full bg-primary" />
-      <div className="absolute -bottom-24 left-10 h-32 w-48 bg-primary opacity-90" style={{ clipPath: "polygon(0 100%, 100% 100%, 50% 0)" }} />
+      <div
+        className="absolute -bottom-24 left-10 h-32 w-48 bg-primary opacity-90"
+        style={{ clipPath: "polygon(0 100%, 100% 100%, 50% 0)" }}
+      />
 
       <svg viewBox="0 0 260 170" className="relative z-10 h-full w-full" fill="none">
         {/* film strip shadow */}
@@ -79,7 +98,16 @@ function CRMIllustration() {
         {/* shadow */}
         <rect x="10" y="10" width="266" height="170" rx="3" fill="#2B2B2B" opacity="0.3" />
         {/* main window */}
-        <rect x="2" y="2" width="266" height="170" rx="3" fill="#1a1a1a" stroke="#333" strokeWidth="1" />
+        <rect
+          x="2"
+          y="2"
+          width="266"
+          height="170"
+          rx="3"
+          fill="#1a1a1a"
+          stroke="#333"
+          strokeWidth="1"
+        />
         {/* sidebar */}
         <rect x="2" y="2" width="54" height="170" fill="#0f0f0f" />
         {[14, 36, 58, 80, 102].map((y) => (
@@ -112,6 +140,8 @@ function CRMIllustration() {
 
 /* ─── Polygon Card ────────────────────────────────────────── */
 
+type StudioFilter = "all" | "web" | "video" | "seo" | "software";
+
 interface CardData {
   number: string;
   badgeColor: string;
@@ -120,15 +150,15 @@ interface CardData {
   clipPath: string;
   shadowClip: string;
   illustration: React.ReactNode;
-  href: string;
-  filter?: string;
+  href: "/studio";
+  filter?: StudioFilter;
 }
 
 function PolygonCard({ card }: { card: CardData }) {
   return (
     <Link
-      to={card.href as any}
-      search={{ filter: card.filter } as any}
+      to={card.href}
+      search={{ filter: card.filter ?? "all" }}
       className="group relative block h-full w-full outline-none"
     >
       {/* dark polygon shadow behind */}
@@ -171,12 +201,12 @@ function PolygonCard({ card }: { card: CardData }) {
                 {card.description}
               </p>
               {/* hex arrow CTA decoration */}
-              <div
-                className="group/btn mt-6 inline-flex items-center justify-center p-2.5 transition-all duration-300"
-              >
+              <div className="group/btn mt-6 inline-flex items-center justify-center p-2.5 transition-all duration-300">
                 <div
                   className="absolute h-10 w-10 border-2 border-foreground/30 transition-colors group-hover/btn:border-foreground group-hover:border-primary"
-                  style={{ clipPath: "polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)" }}
+                  style={{
+                    clipPath: "polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)",
+                  }}
                 />
                 <ArrowRight className="relative z-10 h-4 w-4 text-foreground transition-transform group-hover/btn:translate-x-0.5 group-hover:text-primary" />
               </div>
@@ -258,12 +288,7 @@ export function PortfolioShowcase() {
       <div className="pointer-events-none absolute right-[10%] top-[10%] h-[400px] w-[400px] rounded-full bg-[#E8CDA5] opacity-10 blur-3xl" />
 
       {/* Technical corner markers */}
-      {[
-        "top-4 left-4",
-        "top-4 right-4",
-        "bottom-4 left-4",
-        "bottom-4 right-4",
-      ].map((pos) => (
+      {["top-4 left-4", "top-4 right-4", "bottom-4 left-4", "bottom-4 right-4"].map((pos) => (
         <div key={pos} className={`pointer-events-none absolute ${pos} h-4 w-4`}>
           <div className="absolute left-0 top-0 h-full w-px bg-foreground/20" />
           <div className="absolute left-0 top-0 h-px w-full bg-foreground/20" />
@@ -285,11 +310,14 @@ export function PortfolioShowcase() {
               className="mt-6 font-display font-black leading-[0.9] tracking-[-0.03em] text-foreground"
               style={{ fontSize: "clamp(2.8rem, 5.5vw, 5rem)" }}
             >
-              Explore<br />My Work<span className="text-primary">■</span>
+              Explore
+              <br />
+              My Work<span className="text-primary">■</span>
             </h2>
             <div className="mt-8 h-0.5 w-12 bg-primary/40" />
             <p className="mt-6 max-w-[260px] font-mono text-[11px] leading-loose text-foreground/70 uppercase">
-              A collection of websites, videos, and software solutions crafted with purpose and precision.
+              A collection of websites, videos, and software solutions crafted with purpose and
+              precision.
             </p>
           </div>
 

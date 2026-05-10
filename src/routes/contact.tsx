@@ -8,7 +8,11 @@ export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
       { title: "Book a Call — GreedyWings" },
-      { name: "description", content: "Book an intro call with GreedyWings. Tell us your name, email, phone, and service type and we'll get back to you within 24 hours." },
+      {
+        name: "description",
+        content:
+          "Book an intro call with GreedyWings. Tell us your name, email, phone, and service type and we'll get back to you within 24 hours.",
+      },
     ],
   }),
   component: ContactPage,
@@ -39,22 +43,25 @@ function ContactPage() {
               <span className="font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-primary">
                 // Book a call
               </span>
-              <h1 className="mt-5 font-display font-black leading-[0.92] tracking-[-0.03em] text-foreground"
+              <h1
+                className="mt-5 font-display font-black leading-[0.92] tracking-[-0.03em] text-foreground"
                 style={{ fontSize: "clamp(3.5rem, 8vw, 7rem)" }}
               >
-                Let's build<br />
-                something<br />
+                Let's build
+                <br />
+                something
+                <br />
                 <span className="text-primary">great.</span>
               </h1>
               <div className="mt-6 h-[1px] w-16 bg-primary/50" />
               <p className="mt-6 max-w-md font-mono text-xs uppercase leading-loose tracking-[0.15em] text-foreground/60">
-                Fill in your details and we'll reach out within 24 hours to schedule your free intro call.
+                Fill in your details and we'll reach out within 24 hours to schedule your free intro
+                call.
               </p>
             </div>
 
             {/* ── Two‑column layout ── */}
             <div className="grid grid-cols-1 gap-16 lg:grid-cols-[1fr_1.4fr] lg:gap-24 xl:gap-32">
-
               {/* ── Left: Info Panel ── */}
               <div className="flex flex-col gap-10">
                 <div className="border-2 border-foreground/30 p-8">
@@ -73,8 +80,12 @@ function ContactPage() {
                           <Icon className="h-4 w-4 text-primary" />
                         </div>
                         <div>
-                          <span className="block font-mono text-[9px] uppercase tracking-[0.2em] text-foreground/60">{label}</span>
-                          <span className="block font-sans text-sm font-medium text-foreground">{value}</span>
+                          <span className="block font-mono text-[9px] uppercase tracking-[0.2em] text-foreground/60">
+                            {label}
+                          </span>
+                          <span className="block font-sans text-sm font-medium text-foreground">
+                            {value}
+                          </span>
                         </div>
                       </li>
                     ))}
@@ -94,7 +105,9 @@ function ContactPage() {
                       { n: "04", text: "We scope, quote, and kick off." },
                     ].map(({ n, text }) => (
                       <li key={n} className="flex items-start gap-4">
-                        <span className="font-mono text-xs font-bold text-primary shrink-0">{n}</span>
+                        <span className="font-mono text-xs font-bold text-primary shrink-0">
+                          {n}
+                        </span>
                         <p className="font-sans text-sm font-medium text-foreground/80">{text}</p>
                       </li>
                     ))}

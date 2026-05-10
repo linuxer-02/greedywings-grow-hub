@@ -79,7 +79,6 @@ export function FaqShowcase() {
 
       {/* Structured Container */}
       <div className="relative z-10 mx-auto flex max-w-[1500px] flex-col gap-0 overflow-hidden rounded-[2.5rem] border-2 border-foreground/20 lg:flex-row lg:items-start">
-
         {/* ── Left Column ── */}
         <div className="relative z-10 flex w-full shrink-0 flex-col p-8 lg:sticky lg:top-32 lg:w-[35%] lg:border-r-2 lg:border-foreground/20 lg:p-12 xl:w-[30%]">
           <span className="font-mono text-[10px] font-bold uppercase tracking-[0.15em] text-primary">
@@ -88,9 +87,12 @@ export function FaqShowcase() {
             QUESTIONS
           </span>
           <h2 className="mt-8 font-sans text-5xl font-medium leading-[1.05] tracking-tight text-foreground sm:text-6xl lg:text-[4.2rem]">
-            We've got<br />
-            answers<br />
-            to what<br />
+            We've got
+            <br />
+            answers
+            <br />
+            to what
+            <br />
             <span className="text-primary">matters.</span>
           </h2>
           <div className="mt-8 h-[1px] w-12 bg-foreground/60" />
@@ -127,10 +129,11 @@ export function FaqShowcase() {
                   transition={{ duration: 0.5, type: "spring", bounce: 0.2 }}
                   key={faq.id}
                   onClick={() => setActiveId(isActive ? null : faq.id)}
-                  className={`group relative flex w-full flex-col overflow-hidden text-left outline outline-[1.5px] outline-foreground/20 transition-colors duration-300 ${colSpanClass} ${isActive
-                    ? "bg-primary/[0.06] z-10"
-                    : "bg-foreground/[0.02] dark:bg-white/[0.04] hover:bg-foreground/[0.04] dark:hover:bg-white/[0.06]"
-                    }`}
+                  className={`group relative flex w-full flex-col overflow-hidden text-left outline outline-[1.5px] outline-foreground/20 transition-colors duration-300 ${colSpanClass} ${
+                    isActive
+                      ? "bg-primary/[0.06] z-10"
+                      : "bg-foreground/[0.02] dark:bg-white/[0.04] hover:bg-foreground/[0.04] dark:hover:bg-white/[0.06]"
+                  }`}
                 >
                   {/* Active Border Overlay */}
                   <AnimatePresence>
@@ -177,7 +180,10 @@ export function FaqShowcase() {
                         </div>
 
                         <div className="mt-1 flex-shrink-0">
-                          <Minus className="h-4 w-4 text-foreground/50 transition-colors group-hover:text-primary sm:h-5 sm:w-5" strokeWidth={1.5} />
+                          <Minus
+                            className="h-4 w-4 text-foreground/50 transition-colors group-hover:text-primary sm:h-5 sm:w-5"
+                            strokeWidth={1.5}
+                          />
                         </div>
                       </motion.div>
                     ) : (
@@ -193,7 +199,10 @@ export function FaqShowcase() {
                           <span className="font-sans text-sm font-bold text-foreground transition-colors group-hover:text-primary sm:text-base">
                             {faq.id}
                           </span>
-                          <Plus className="h-3 w-3 text-foreground/40 transition-colors group-hover:text-primary sm:h-4 sm:w-4" strokeWidth={1.5} />
+                          <Plus
+                            className="h-3 w-3 text-foreground/40 transition-colors group-hover:text-primary sm:h-4 sm:w-4"
+                            strokeWidth={1.5}
+                          />
                         </div>
                         <div className="mt-3 text-left sm:mt-6 md:mt-8">
                           <h3 className="font-sans text-[10px] text-foreground/80 transition-colors group-hover:text-foreground sm:text-xs md:text-sm">
@@ -203,13 +212,11 @@ export function FaqShowcase() {
                       </motion.div>
                     )}
                   </motion.div>
-
                 </motion.button>
               );
             })}
           </div>
         </div>
-
       </div>
     </section>
   );

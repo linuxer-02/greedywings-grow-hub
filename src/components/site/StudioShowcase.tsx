@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { ArrowRight, Play } from "lucide-react";
-import { Link, useSearch } from "@tanstack/react-router";
+import { Link, useSearch, useNavigate } from "@tanstack/react-router";
 
 /* ─── Types ──────────────────────────────────────────────── */
 
@@ -230,18 +230,22 @@ function ProjectCard({ project }: { project: Project }) {
 /* ─── Main Section ────────────────────────────────────────── */
 
 export function StudioShowcase() {
-  const search = useSearch({ strict: false }) as any;
+  type SearchParams = { filter?: Category };
+  const search = useSearch({ strict: false }) as SearchParams;
+  const navigate = useNavigate();
   const [active, setActive] = useState<Category>("all");
 
-  // Sync state if URL search param changes
+  // Sync local state when URL search param changes (e.g. from PortfolioShowcase links)
   useEffect(() => {
-    if (search?.filter) {
-      setActive(search.filter);
-    }
+    setActive((search?.filter as Category) ?? "all");
   }, [search?.filter]);
 
-  const filtered =
-    active === "all" ? projects : projects.filter((p) => p.category === active);
+  function handleFilter(key: Category) {
+    setActive(key);
+    navigate({ to: "/studio", search: { filter: key } });
+  }
+
+  const filtered = active === "all" ? projects : projects.filter((p) => p.category === active);
 
   return (
     <section className="relative w-full overflow-hidden py-24 md:py-32">
@@ -249,7 +253,6 @@ export function StudioShowcase() {
       <div className="pointer-events-none absolute left-1/2 top-0 h-[600px] w-[800px] -translate-x-1/2 -translate-y-1/4 rounded-full bg-primary/5 blur-[120px]" />
 
       <div className="relative z-10 mx-auto max-w-[1500px] px-5 md:px-10">
-
         {/* ── Header ── */}
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
@@ -277,7 +280,7 @@ export function StudioShowcase() {
           {filters.map((f) => (
             <button
               key={f.key}
-              onClick={() => setActive(f.key)}
+              onClick={() => handleFilter(f.key)}
               className={`rounded-none px-5 py-2 font-mono text-xs font-semibold uppercase tracking-[0.15em] transition-all duration-300 ${
                 active === f.key
                   ? "bg-primary text-primary-foreground"

@@ -30,7 +30,9 @@ export function Hero() {
               12+
             </div>
             <div className="mt-1 font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground md:text-xs">
-              Brands<br />Scaled
+              Brands
+              <br />
+              Scaled
             </div>
           </div>
         </div>
@@ -55,7 +57,8 @@ export function Hero() {
             <MetaLabel index="00.03" hideOnMobile />
             <div className="max-w-md">
               <p className="font-mono text-[11px] font-medium uppercase leading-relaxed tracking-[0.18em] text-foreground/85 md:text-sm">
-                A digital marketing agency built for<br />
+                A digital marketing agency built for
+                <br />
                 brands with appetite.
               </p>
               <p className="mt-3 font-mono text-[11px] font-medium uppercase leading-relaxed tracking-[0.18em] text-primary md:text-sm">
@@ -77,9 +80,7 @@ export function Hero() {
 
 function MetaLabel({ index, hideOnMobile }: { index: string; hideOnMobile?: boolean }) {
   return (
-    <div
-      className={`flex items-center gap-3 ${hideOnMobile ? "hidden md:flex" : "flex"}`}
-    >
+    <div className={`flex items-center gap-3 ${hideOnMobile ? "hidden md:flex" : "flex"}`}>
       <span className="block h-px w-6 bg-foreground/40" />
       <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground md:text-xs">
         // {index}°

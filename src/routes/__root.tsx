@@ -73,15 +73,27 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "GreedyWings — Digital Marketing Agency" },
-      { name: "description", content: "A digital marketing agency built for brands with appetite. We turn attention into revenue." },
+      {
+        name: "description",
+        content:
+          "A digital marketing agency built for brands with appetite. We turn attention into revenue.",
+      },
       { name: "author", content: "GreedyWings" },
       { property: "og:title", content: "GreedyWings — Digital Marketing Agency" },
-      { property: "og:description", content: "A digital marketing agency built for brands with appetite. We turn attention into revenue." },
+      {
+        property: "og:description",
+        content:
+          "A digital marketing agency built for brands with appetite. We turn attention into revenue.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@GreedyWings" },
       { name: "twitter:title", content: "GreedyWings — Digital Marketing Agency" },
-      { name: "twitter:description", content: "A digital marketing agency built for brands with appetite. We turn attention into revenue." },
+      {
+        name: "twitter:description",
+        content:
+          "A digital marketing agency built for brands with appetite. We turn attention into revenue.",
+      },
     ],
     links: [
       {
