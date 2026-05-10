@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Globe, Video, Database, ArrowRight, Check } from "lucide-react";
+import { ScrambleText } from "../ui/scramble-text";
 
 const services = [
   {
@@ -144,11 +145,11 @@ export function ServicesShowcase() {
                     >
                       {service.title}
                     </h3>
-                    <p
+                    <ScrambleText
+                      as="p"
+                      text={service.subtitle}
                       className={`mt-2 font-mono text-xs tracking-[0.1em] transition-colors duration-500 ${isActive ? "text-primary" : "text-muted-foreground"}`}
-                    >
-                      {service.subtitle}
-                    </p>
+                    />
                   </div>
                 </div>
               </button>
@@ -173,12 +174,18 @@ export function ServicesShowcase() {
               </div>
 
               <div>
-                <h3 className="font-display text-3xl font-black tracking-tight text-foreground md:text-5xl lg:text-6xl transition-all duration-300">
-                  {activeService.title}
-                </h3>
-                <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-                  {activeService.description}
-                </p>
+                <ScrambleText
+                  as="h3"
+                  text={activeService.title}
+                  className="font-display text-3xl font-black tracking-tight text-foreground md:text-5xl lg:text-6xl transition-all duration-300"
+                />
+                <ScrambleText
+                  as="p"
+                  text={activeService.description}
+                  className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground"
+                  scrambleSpeed={15}
+                  revealSpeed={1}
+                />
               </div>
 
               <div className="grid w-full grid-cols-1 gap-x-8 gap-y-4 pt-4 sm:grid-cols-2">
@@ -187,9 +194,13 @@ export function ServicesShowcase() {
                     <div className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-primary/20 text-primary">
                       <Check className="h-3 w-3" strokeWidth={3} />
                     </div>
-                    <span className="font-mono text-xs font-medium tracking-wide text-foreground/90">
-                      {feature}
-                    </span>
+                    <ScrambleText
+                      as="span"
+                      text={feature}
+                      className="font-mono text-xs font-medium tracking-wide text-foreground/90"
+                      scrambleSpeed={10}
+                      revealSpeed={0.8}
+                    />
                   </div>
                 ))}
               </div>

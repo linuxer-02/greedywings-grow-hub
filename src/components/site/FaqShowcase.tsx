@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Plus, Minus, ArrowRight } from "lucide-react";
 import { Link } from "@tanstack/react-router";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 
 const faqs = [
   {
@@ -71,9 +71,33 @@ const faqs = [
 
 export function FaqShowcase() {
   const [activeId, setActiveId] = useState<string | null>("01");
+  const sectionRef = useRef(null);
+  const isInView = useInView(sectionRef, { amount: 0.4, once: true });
+  const hasTriggered = useRef(false);
+
+  useEffect(() => {
+    if (isInView && !hasTriggered.current) {
+      hasTriggered.current = true;
+      
+      // Sequence: Open 02 after 1s, then 03 after another 1.5s, then stay or revert
+      const timer1 = setTimeout(() => setActiveId("02"), 1000);
+      const timer2 = setTimeout(() => setActiveId("03"), 2500);
+      const timer3 = setTimeout(() => setActiveId("01"), 4500); // Back to first one
+
+      return () => {
+        clearTimeout(timer1);
+        clearTimeout(timer2);
+        clearTimeout(timer3);
+      };
+    }
+  }, [isInView]);
 
   return (
-    <section id="faq" className="relative w-full px-4 py-24 md:px-8 md:py-32 xl:px-10">
+    <section 
+      ref={sectionRef}
+      id="faq" 
+      className="relative w-full px-4 py-24 md:px-8 md:py-32 xl:px-10"
+    >
       {/* Decorative background elements */}
       <div className="pointer-events-none absolute left-0 top-1/4 h-96 w-96 -translate-x-1/2 rounded-full bg-primary/10 blur-[120px]" />
 
