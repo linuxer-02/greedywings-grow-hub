@@ -36,8 +36,8 @@ const projects: Project[] = [
     categoryColor: "bg-primary",
     image: "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=800&q=80",
     isVideo: false,
-    clientLogo: "T",
-    clientName: "TechFlow Inc.",
+    clientLogo: "N",
+    clientName: "Nutrazs",
     title: "E-commerce Platform Redesign",
     description: "Complete UX overhaul for B2B SaaS platform serving 10k+ users daily.",
     stats: [

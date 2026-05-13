@@ -46,10 +46,10 @@ export function ContactStrip() {
             {[
               {
                 label: "Email us",
-                value: "hello@greedywings.in",
-                href: "mailto:hello@greedywings.in",
+                value: "hello@greedywings.com",
+                href: "mailto:hello@greedywings.com",
               },
-              { label: "Call us", value: "+91 98765 43210", href: "tel:+919876543210" },
+              { label: "Call us", value: "+91 89250 05831", href: "tel:+918925005831" },
             ].map(({ label, value, href }) => (
               <a key={label} href={href} className="group flex flex-col items-start lg:items-end">
                 <span className="font-mono text-[9px] font-bold uppercase tracking-[0.25em] text-background/40 transition-colors group-hover:text-primary">

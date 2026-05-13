@@ -207,7 +207,7 @@ export function ContactForm() {
                 icon={Phone}
                 value={form.phone}
                 onChange={set("phone")}
-                placeholder="+91 98765 43210"
+                placeholder="+91 89250 05831"
                 required
               />
               <ServiceSelect value={form.service} onChange={set("service")} />
