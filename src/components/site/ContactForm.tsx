@@ -1,6 +1,8 @@
 import { useState } from "react";
-import { ArrowRight, Check, Loader2, Phone, Mail, User, ChevronDown } from "lucide-react";
+import { ArrowRight, Check, Loader2, Phone, Mail, User, ChevronDown, AlertCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { submitContactForm } from "@/lib/contact-actions";
+import { toast } from "sonner";
 
 const services = [
   { value: "web", label: "Website Design & Development" },
@@ -142,15 +144,50 @@ export function ContactForm() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setState("loading");
-    // Simulate async submit — replace with real API call
-    await new Promise((r) => setTimeout(r, 1800));
-    setState("success");
+    
+    try {
+      await submitContactForm({ data: form });
+      setState("success");
+      toast.success("Message sent successfully!");
+    } catch (error) {
+      console.error("Submission error:", error);
+      setState("error");
+      toast.error(error instanceof Error ? error.message : "Something went wrong. Please try again.");
+      
+      // Reset to idle after 3 seconds so they can try again
+      setTimeout(() => setState("idle"), 3000);
+    }
   }
 
   return (
     <div className="relative w-full">
       <AnimatePresence mode="wait">
-        {state === "success" ? (
+        {state === "error" ? (
+          <motion.div
+            key="error"
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="flex flex-col items-center justify-center gap-6 py-20 text-center"
+          >
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-red-500/10">
+              <AlertCircle className="h-8 w-8 text-red-500" />
+            </div>
+            <div>
+              <h3 className="font-display text-2xl font-black text-foreground">
+                Oops! Something went wrong.
+              </h3>
+              <p className="mt-2 font-mono text-xs uppercase tracking-[0.18em] text-foreground/60">
+                Please try again or email us directly at hello@greedywings.in
+              </p>
+              <button
+                onClick={() => setState("idle")}
+                className="mt-6 font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-primary hover:underline"
+              >
+                ← Back to form
+              </button>
+            </div>
+          </motion.div>
+        ) : state === "success" ? (
           <motion.div
             key="success"
             initial={{ opacity: 0, scale: 0.96 }}
