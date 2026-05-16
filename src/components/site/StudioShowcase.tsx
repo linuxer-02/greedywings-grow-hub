@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
-import { ArrowRight, Play } from "lucide-react";
+import { ArrowRight, Play, Loader2 } from "lucide-react";
 import { Link, useSearch, useNavigate } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
+import { getStudioProjects } from "@/lib/studio-actions";
 
 /* ─── Types ──────────────────────────────────────────────── */
 
@@ -26,119 +28,6 @@ interface Project {
   href: string;
 }
 
-/* ─── Mock Data ──────────────────────────────────────────── */
-
-const projects: Project[] = [
-  {
-    id: "p1",
-    category: "web",
-    categoryLabel: "WEB DEV",
-    categoryColor: "bg-primary",
-    image: "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=800&q=80",
-    isVideo: false,
-    clientLogo: "N",
-    clientName: "Nutrazs",
-    title: "E-commerce Platform Redesign",
-    description: "Complete UX overhaul for B2B SaaS platform serving 10k+ users daily.",
-    stats: [
-      { value: "+187%", label: "CONVERSION" },
-      { value: "-42%", label: "BOUNCE RATE" },
-      { value: "3.2s", label: "LOAD TIME" },
-    ],
-    href: "/studio",
-  },
-  {
-    id: "p2",
-    category: "video",
-    categoryLabel: "VIDEO",
-    categoryColor: "bg-violet-500",
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
-    isVideo: true,
-    clientLogo: "M",
-    clientName: "Momentum Studios",
-    title: "Brand Storytelling Series",
-    description: "12-part documentary series showcasing startup journey and culture.",
-    stats: [
-      { value: "2.4M", label: "VIEWS" },
-      { value: "+320%", label: "ENGAGEMENT" },
-      { value: "12", label: "EPISODES" },
-    ],
-    href: "/studio",
-  },
-  {
-    id: "p3",
-    category: "seo",
-    categoryLabel: "SEO",
-    categoryColor: "bg-emerald-500",
-    image: "https://images.unsplash.com/photo-1642790106117-e829e14a795f?w=800&q=80",
-    isVideo: false,
-    clientLogo: "G",
-    clientName: "GrowthLab",
-    title: "Organic Traffic Domination",
-    description: "SEO strategy overhaul for fintech startup targeting enterprise clients.",
-    stats: [
-      { value: "+412%", label: "TRAFFIC" },
-      { value: "#1", label: "RANKINGS" },
-      { value: "87", label: "KEYWORDS" },
-    ],
-    href: "/studio",
-  },
-  {
-    id: "p4",
-    category: "software",
-    categoryLabel: "SOFTWARE",
-    categoryColor: "bg-blue-500",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
-    isVideo: false,
-    clientLogo: "N",
-    clientName: "NovaCRM",
-    title: "Custom CRM & Sales Pipeline",
-    description: "End-to-end CRM built for a 50-person sales team with automated follow-ups.",
-    stats: [
-      { value: "3x", label: "DEALS CLOSED" },
-      { value: "-60%", label: "ADMIN TIME" },
-      { value: "50+", label: "USERS" },
-    ],
-    href: "/studio",
-  },
-  {
-    id: "p5",
-    category: "web",
-    categoryLabel: "WEB DEV",
-    categoryColor: "bg-primary",
-    image: "https://images.unsplash.com/photo-1547658719-da2b51169166?w=800&q=80",
-    isVideo: false,
-    clientLogo: "P",
-    clientName: "PulseMedia",
-    title: "Media Agency Landing Page",
-    description: "High-converting landing page with animated hero and interactive pricing table.",
-    stats: [
-      { value: "+230%", label: "LEADS" },
-      { value: "98", label: "PERF SCORE" },
-      { value: "4.8s", label: "TIME ON SITE" },
-    ],
-    href: "/studio",
-  },
-  {
-    id: "p6",
-    category: "video",
-    categoryLabel: "VIDEO",
-    categoryColor: "bg-violet-500",
-    image: "https://images.unsplash.com/photo-1574717024453-354056aafa98?w=800&q=80",
-    isVideo: true,
-    clientLogo: "V",
-    clientName: "VisionX",
-    title: "Product Launch Reel",
-    description: "60-second hero reel for a hardware product launch across YouTube & Instagram.",
-    stats: [
-      { value: "5.1M", label: "REACH" },
-      { value: "+540%", label: "SALES WEEK 1" },
-      { value: "4.9★", label: "CLIENT SCORE" },
-    ],
-    href: "/studio",
-  },
-];
-
 /* ─── Filter Tabs ─────────────────────────────────────────── */
 
 const filters: { key: Category; label: string }[] = [
@@ -153,8 +42,7 @@ const filters: { key: Category; label: string }[] = [
 
 function ProjectCard({ project }: { project: Project }) {
   return (
-    <Link
-      to={project.href as "/"}
+    <div
       className="group flex flex-col overflow-hidden rounded-2xl border border-border/60 bg-card/30 backdrop-blur-sm transition-all duration-500 hover:border-primary/60 hover:bg-card/50 hover:shadow-[0_0_40px_-10px_var(--color-primary)]"
     >
       {/* Cover Image */}
@@ -211,8 +99,8 @@ function ProjectCard({ project }: { project: Project }) {
 
         {/* Stats */}
         <div className="mt-auto flex items-end justify-between gap-2">
-          {project.stats.map((stat) => (
-            <div key={stat.label} className="flex flex-col gap-1">
+          {project.stats.map((stat, i) => (
+            <div key={i} className="flex flex-col gap-1">
               <span className="font-display text-xl font-black text-primary sm:text-2xl">
                 {stat.value}
               </span>
@@ -223,7 +111,7 @@ function ProjectCard({ project }: { project: Project }) {
           ))}
         </div>
       </div>
-    </Link>
+    </div>
   );
 }
 
@@ -235,7 +123,12 @@ export function StudioShowcase() {
   const navigate = useNavigate();
   const [active, setActive] = useState<Category>("all");
 
-  // Sync local state when URL search param changes (e.g. from PortfolioShowcase links)
+  const projectsQuery = useQuery({
+    queryKey: ["studio_projects"],
+    queryFn: () => getStudioProjects(),
+  });
+
+  // Sync local state when URL search param changes
   useEffect(() => {
     setActive((search?.filter as Category) ?? "all");
   }, [search?.filter]);
@@ -245,7 +138,8 @@ export function StudioShowcase() {
     navigate({ to: "/studio", search: { filter: key } });
   }
 
-  const filtered = active === "all" ? projects : projects.filter((p) => p.category === active);
+  const projects = projectsQuery.data || [];
+  const filtered = active === "all" ? projects : projects.filter((p: any) => p.category === active);
 
   return (
     <section className="relative w-full overflow-hidden py-24 md:py-32">
@@ -294,9 +188,19 @@ export function StudioShowcase() {
 
         {/* ── Project Grid ── */}
         <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((project) => (
-            <ProjectCard key={project.id} project={project} />
-          ))}
+          {projectsQuery.isLoading ? (
+             Array.from({ length: 6 }).map((_, i) => (
+               <div key={i} className="aspect-[4/5] w-full rounded-2xl bg-muted/20 animate-pulse border border-border/40" />
+             ))
+          ) : filtered.length > 0 ? (
+            filtered.map((project: any) => (
+              <ProjectCard key={project.id} project={project} />
+            ))
+          ) : (
+            <div className="col-span-full py-20 text-center">
+              <p className="font-mono text-sm text-muted-foreground/40 uppercase tracking-widest">No projects found in this category.</p>
+            </div>
+          )}
         </div>
 
         {/* ── View All CTA ── */}

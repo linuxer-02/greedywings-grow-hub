@@ -12,7 +12,12 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as StudioRouteImport } from './routes/studio'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as AdminHqRouteImport } from './routes/admin-hq'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminHqIndexRouteImport } from './routes/admin-hq/index'
+import { Route as AdminHqStudioRouteImport } from './routes/admin-hq/studio'
+import { Route as AdminHqLoginRouteImport } from './routes/admin-hq/login'
+import { Route as AdminHqCrmRouteImport } from './routes/admin-hq/crm'
 
 const StudioRoute = StudioRouteImport.update({
   id: '/studio',
@@ -29,41 +34,108 @@ const ContactRoute = ContactRouteImport.update({
   path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminHqRoute = AdminHqRouteImport.update({
+  id: '/admin-hq',
+  path: '/admin-hq',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminHqIndexRoute = AdminHqIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminHqRoute,
+} as any)
+const AdminHqStudioRoute = AdminHqStudioRouteImport.update({
+  id: '/studio',
+  path: '/studio',
+  getParentRoute: () => AdminHqRoute,
+} as any)
+const AdminHqLoginRoute = AdminHqLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => AdminHqRoute,
+} as any)
+const AdminHqCrmRoute = AdminHqCrmRouteImport.update({
+  id: '/crm',
+  path: '/crm',
+  getParentRoute: () => AdminHqRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin-hq': typeof AdminHqRouteWithChildren
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/studio': typeof StudioRoute
+  '/admin-hq/crm': typeof AdminHqCrmRoute
+  '/admin-hq/login': typeof AdminHqLoginRoute
+  '/admin-hq/studio': typeof AdminHqStudioRoute
+  '/admin-hq/': typeof AdminHqIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/studio': typeof StudioRoute
+  '/admin-hq/crm': typeof AdminHqCrmRoute
+  '/admin-hq/login': typeof AdminHqLoginRoute
+  '/admin-hq/studio': typeof AdminHqStudioRoute
+  '/admin-hq': typeof AdminHqIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin-hq': typeof AdminHqRouteWithChildren
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/studio': typeof StudioRoute
+  '/admin-hq/crm': typeof AdminHqCrmRoute
+  '/admin-hq/login': typeof AdminHqLoginRoute
+  '/admin-hq/studio': typeof AdminHqStudioRoute
+  '/admin-hq/': typeof AdminHqIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/contact' | '/faq' | '/studio'
+  fullPaths:
+    | '/'
+    | '/admin-hq'
+    | '/contact'
+    | '/faq'
+    | '/studio'
+    | '/admin-hq/crm'
+    | '/admin-hq/login'
+    | '/admin-hq/studio'
+    | '/admin-hq/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/contact' | '/faq' | '/studio'
-  id: '__root__' | '/' | '/contact' | '/faq' | '/studio'
+  to:
+    | '/'
+    | '/contact'
+    | '/faq'
+    | '/studio'
+    | '/admin-hq/crm'
+    | '/admin-hq/login'
+    | '/admin-hq/studio'
+    | '/admin-hq'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin-hq'
+    | '/contact'
+    | '/faq'
+    | '/studio'
+    | '/admin-hq/crm'
+    | '/admin-hq/login'
+    | '/admin-hq/studio'
+    | '/admin-hq/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminHqRoute: typeof AdminHqRouteWithChildren
   ContactRoute: typeof ContactRoute
   FaqRoute: typeof FaqRoute
   StudioRoute: typeof StudioRoute
@@ -92,6 +164,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin-hq': {
+      id: '/admin-hq'
+      path: '/admin-hq'
+      fullPath: '/admin-hq'
+      preLoaderRoute: typeof AdminHqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -99,11 +178,57 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin-hq/': {
+      id: '/admin-hq/'
+      path: '/'
+      fullPath: '/admin-hq/'
+      preLoaderRoute: typeof AdminHqIndexRouteImport
+      parentRoute: typeof AdminHqRoute
+    }
+    '/admin-hq/studio': {
+      id: '/admin-hq/studio'
+      path: '/studio'
+      fullPath: '/admin-hq/studio'
+      preLoaderRoute: typeof AdminHqStudioRouteImport
+      parentRoute: typeof AdminHqRoute
+    }
+    '/admin-hq/login': {
+      id: '/admin-hq/login'
+      path: '/login'
+      fullPath: '/admin-hq/login'
+      preLoaderRoute: typeof AdminHqLoginRouteImport
+      parentRoute: typeof AdminHqRoute
+    }
+    '/admin-hq/crm': {
+      id: '/admin-hq/crm'
+      path: '/crm'
+      fullPath: '/admin-hq/crm'
+      preLoaderRoute: typeof AdminHqCrmRouteImport
+      parentRoute: typeof AdminHqRoute
+    }
   }
 }
 
+interface AdminHqRouteChildren {
+  AdminHqCrmRoute: typeof AdminHqCrmRoute
+  AdminHqLoginRoute: typeof AdminHqLoginRoute
+  AdminHqStudioRoute: typeof AdminHqStudioRoute
+  AdminHqIndexRoute: typeof AdminHqIndexRoute
+}
+
+const AdminHqRouteChildren: AdminHqRouteChildren = {
+  AdminHqCrmRoute: AdminHqCrmRoute,
+  AdminHqLoginRoute: AdminHqLoginRoute,
+  AdminHqStudioRoute: AdminHqStudioRoute,
+  AdminHqIndexRoute: AdminHqIndexRoute,
+}
+
+const AdminHqRouteWithChildren =
+  AdminHqRoute._addFileChildren(AdminHqRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminHqRoute: AdminHqRouteWithChildren,
   ContactRoute: ContactRoute,
   FaqRoute: FaqRoute,
   StudioRoute: StudioRoute,
