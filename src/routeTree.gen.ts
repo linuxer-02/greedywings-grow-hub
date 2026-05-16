@@ -10,13 +10,23 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as StudioRouteImport } from './routes/studio'
+import { Route as GreyfogRouteImport } from './routes/greyfog'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as GreyfogIndexRouteImport } from './routes/greyfog/index'
+import { Route as GreyfogStudioRouteImport } from './routes/greyfog/studio'
+import { Route as GreyfogLoginRouteImport } from './routes/greyfog/login'
+import { Route as GreyfogLeadsRouteImport } from './routes/greyfog/leads'
 
 const StudioRoute = StudioRouteImport.update({
   id: '/studio',
   path: '/studio',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GreyfogRoute = GreyfogRouteImport.update({
+  id: '/greyfog',
+  path: '/greyfog',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FaqRoute = FaqRouteImport.update({
@@ -34,38 +44,100 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GreyfogIndexRoute = GreyfogIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => GreyfogRoute,
+} as any)
+const GreyfogStudioRoute = GreyfogStudioRouteImport.update({
+  id: '/studio',
+  path: '/studio',
+  getParentRoute: () => GreyfogRoute,
+} as any)
+const GreyfogLoginRoute = GreyfogLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => GreyfogRoute,
+} as any)
+const GreyfogLeadsRoute = GreyfogLeadsRouteImport.update({
+  id: '/leads',
+  path: '/leads',
+  getParentRoute: () => GreyfogRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
+  '/greyfog': typeof GreyfogRouteWithChildren
   '/studio': typeof StudioRoute
+  '/greyfog/leads': typeof GreyfogLeadsRoute
+  '/greyfog/login': typeof GreyfogLoginRoute
+  '/greyfog/studio': typeof GreyfogStudioRoute
+  '/greyfog/': typeof GreyfogIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/studio': typeof StudioRoute
+  '/greyfog/leads': typeof GreyfogLeadsRoute
+  '/greyfog/login': typeof GreyfogLoginRoute
+  '/greyfog/studio': typeof GreyfogStudioRoute
+  '/greyfog': typeof GreyfogIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
+  '/greyfog': typeof GreyfogRouteWithChildren
   '/studio': typeof StudioRoute
+  '/greyfog/leads': typeof GreyfogLeadsRoute
+  '/greyfog/login': typeof GreyfogLoginRoute
+  '/greyfog/studio': typeof GreyfogStudioRoute
+  '/greyfog/': typeof GreyfogIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/contact' | '/faq' | '/studio'
+  fullPaths:
+    | '/'
+    | '/contact'
+    | '/faq'
+    | '/greyfog'
+    | '/studio'
+    | '/greyfog/leads'
+    | '/greyfog/login'
+    | '/greyfog/studio'
+    | '/greyfog/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/contact' | '/faq' | '/studio'
-  id: '__root__' | '/' | '/contact' | '/faq' | '/studio'
+  to:
+    | '/'
+    | '/contact'
+    | '/faq'
+    | '/studio'
+    | '/greyfog/leads'
+    | '/greyfog/login'
+    | '/greyfog/studio'
+    | '/greyfog'
+  id:
+    | '__root__'
+    | '/'
+    | '/contact'
+    | '/faq'
+    | '/greyfog'
+    | '/studio'
+    | '/greyfog/leads'
+    | '/greyfog/login'
+    | '/greyfog/studio'
+    | '/greyfog/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ContactRoute: typeof ContactRoute
   FaqRoute: typeof FaqRoute
+  GreyfogRoute: typeof GreyfogRouteWithChildren
   StudioRoute: typeof StudioRoute
 }
 
@@ -76,6 +148,13 @@ declare module '@tanstack/react-router' {
       path: '/studio'
       fullPath: '/studio'
       preLoaderRoute: typeof StudioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/greyfog': {
+      id: '/greyfog'
+      path: '/greyfog'
+      fullPath: '/greyfog'
+      preLoaderRoute: typeof GreyfogRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/faq': {
@@ -99,13 +178,59 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/greyfog/': {
+      id: '/greyfog/'
+      path: '/'
+      fullPath: '/greyfog/'
+      preLoaderRoute: typeof GreyfogIndexRouteImport
+      parentRoute: typeof GreyfogRoute
+    }
+    '/greyfog/studio': {
+      id: '/greyfog/studio'
+      path: '/studio'
+      fullPath: '/greyfog/studio'
+      preLoaderRoute: typeof GreyfogStudioRouteImport
+      parentRoute: typeof GreyfogRoute
+    }
+    '/greyfog/login': {
+      id: '/greyfog/login'
+      path: '/login'
+      fullPath: '/greyfog/login'
+      preLoaderRoute: typeof GreyfogLoginRouteImport
+      parentRoute: typeof GreyfogRoute
+    }
+    '/greyfog/leads': {
+      id: '/greyfog/leads'
+      path: '/leads'
+      fullPath: '/greyfog/leads'
+      preLoaderRoute: typeof GreyfogLeadsRouteImport
+      parentRoute: typeof GreyfogRoute
+    }
   }
 }
+
+interface GreyfogRouteChildren {
+  GreyfogLeadsRoute: typeof GreyfogLeadsRoute
+  GreyfogLoginRoute: typeof GreyfogLoginRoute
+  GreyfogStudioRoute: typeof GreyfogStudioRoute
+  GreyfogIndexRoute: typeof GreyfogIndexRoute
+}
+
+const GreyfogRouteChildren: GreyfogRouteChildren = {
+  GreyfogLeadsRoute: GreyfogLeadsRoute,
+  GreyfogLoginRoute: GreyfogLoginRoute,
+  GreyfogStudioRoute: GreyfogStudioRoute,
+  GreyfogIndexRoute: GreyfogIndexRoute,
+}
+
+const GreyfogRouteWithChildren =
+  GreyfogRoute._addFileChildren(GreyfogRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ContactRoute: ContactRoute,
   FaqRoute: FaqRoute,
+  GreyfogRoute: GreyfogRouteWithChildren,
   StudioRoute: StudioRoute,
 }
 export const routeTree = rootRouteImport

@@ -11,133 +11,10 @@ interface Stat {
   label: string;
 }
 
-interface Project {
-  id: string;
-  category: Category;
-  categoryLabel: string;
-  categoryColor: string;
-  image: string;
-  isVideo: boolean;
-  clientLogo: string;
-  clientName: string;
-  title: string;
-  description: string;
-  stats: Stat[];
-  href: string;
-}
+import { useProjects, Project } from "@/hooks/useProjects";
 
 /* ─── Mock Data ──────────────────────────────────────────── */
-
-const projects: Project[] = [
-  {
-    id: "p1",
-    category: "web",
-    categoryLabel: "WEB DEV",
-    categoryColor: "bg-primary",
-    image: "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=800&q=80",
-    isVideo: false,
-    clientLogo: "N",
-    clientName: "Nutrazs",
-    title: "E-commerce Platform Redesign",
-    description: "Complete UX overhaul for B2B SaaS platform serving 10k+ users daily.",
-    stats: [
-      { value: "+187%", label: "CONVERSION" },
-      { value: "-42%", label: "BOUNCE RATE" },
-      { value: "3.2s", label: "LOAD TIME" },
-    ],
-    href: "/studio",
-  },
-  {
-    id: "p2",
-    category: "video",
-    categoryLabel: "VIDEO",
-    categoryColor: "bg-violet-500",
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
-    isVideo: true,
-    clientLogo: "M",
-    clientName: "Momentum Studios",
-    title: "Brand Storytelling Series",
-    description: "12-part documentary series showcasing startup journey and culture.",
-    stats: [
-      { value: "2.4M", label: "VIEWS" },
-      { value: "+320%", label: "ENGAGEMENT" },
-      { value: "12", label: "EPISODES" },
-    ],
-    href: "/studio",
-  },
-  {
-    id: "p3",
-    category: "seo",
-    categoryLabel: "SEO",
-    categoryColor: "bg-emerald-500",
-    image: "https://images.unsplash.com/photo-1642790106117-e829e14a795f?w=800&q=80",
-    isVideo: false,
-    clientLogo: "G",
-    clientName: "GrowthLab",
-    title: "Organic Traffic Domination",
-    description: "SEO strategy overhaul for fintech startup targeting enterprise clients.",
-    stats: [
-      { value: "+412%", label: "TRAFFIC" },
-      { value: "#1", label: "RANKINGS" },
-      { value: "87", label: "KEYWORDS" },
-    ],
-    href: "/studio",
-  },
-  {
-    id: "p4",
-    category: "software",
-    categoryLabel: "SOFTWARE",
-    categoryColor: "bg-blue-500",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
-    isVideo: false,
-    clientLogo: "N",
-    clientName: "NovaCRM",
-    title: "Custom CRM & Sales Pipeline",
-    description: "End-to-end CRM built for a 50-person sales team with automated follow-ups.",
-    stats: [
-      { value: "3x", label: "DEALS CLOSED" },
-      { value: "-60%", label: "ADMIN TIME" },
-      { value: "50+", label: "USERS" },
-    ],
-    href: "/studio",
-  },
-  {
-    id: "p5",
-    category: "web",
-    categoryLabel: "WEB DEV",
-    categoryColor: "bg-primary",
-    image: "https://images.unsplash.com/photo-1547658719-da2b51169166?w=800&q=80",
-    isVideo: false,
-    clientLogo: "P",
-    clientName: "PulseMedia",
-    title: "Media Agency Landing Page",
-    description: "High-converting landing page with animated hero and interactive pricing table.",
-    stats: [
-      { value: "+230%", label: "LEADS" },
-      { value: "98", label: "PERF SCORE" },
-      { value: "4.8s", label: "TIME ON SITE" },
-    ],
-    href: "/studio",
-  },
-  {
-    id: "p6",
-    category: "video",
-    categoryLabel: "VIDEO",
-    categoryColor: "bg-violet-500",
-    image: "https://images.unsplash.com/photo-1574717024453-354056aafa98?w=800&q=80",
-    isVideo: true,
-    clientLogo: "V",
-    clientName: "VisionX",
-    title: "Product Launch Reel",
-    description: "60-second hero reel for a hardware product launch across YouTube & Instagram.",
-    stats: [
-      { value: "5.1M", label: "REACH" },
-      { value: "+540%", label: "SALES WEEK 1" },
-      { value: "4.9★", label: "CLIENT SCORE" },
-    ],
-    href: "/studio",
-  },
-];
+// Moved to useProjects hook
 
 /* ─── Filter Tabs ─────────────────────────────────────────── */
 
@@ -234,6 +111,7 @@ export function StudioShowcase() {
   const search = useSearch({ strict: false }) as SearchParams;
   const navigate = useNavigate();
   const [active, setActive] = useState<Category>("all");
+  const { projects, isLoading } = useProjects();
 
   // Sync local state when URL search param changes (e.g. from PortfolioShowcase links)
   useEffect(() => {
@@ -294,9 +172,19 @@ export function StudioShowcase() {
 
         {/* ── Project Grid ── */}
         <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((project) => (
-            <ProjectCard key={project.id} project={project} />
-          ))}
+          {isLoading ? (
+            <div className="col-span-full py-20 text-center font-mono text-sm text-muted-foreground">
+              Loading projects...
+            </div>
+          ) : filtered.length === 0 ? (
+            <div className="col-span-full py-20 text-center font-mono text-sm text-muted-foreground">
+              No projects found in this category.
+            </div>
+          ) : (
+            filtered.map((project) => (
+              <ProjectCard key={project.id} project={project} />
+            ))
+          )}
         </div>
 
         {/* ── View All CTA ── */}
